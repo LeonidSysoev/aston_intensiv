@@ -1,10 +1,8 @@
 package aston.intensiv;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
 
-public class MyArrayList<T> {
+public class MyArrayList<T extends Comparable<T>> {
     private final int INIT_SIZE = 10;
     private Object[] array;
     private int currentSize;
@@ -57,7 +55,6 @@ public class MyArrayList<T> {
     }
 
     public boolean contains(T item) {
-
         return indexOf(item) != -1;
     }
 
@@ -153,33 +150,37 @@ public class MyArrayList<T> {
         }
     }
 
-    public void quickSort(T [] arr, int begin, int end, Comparator<T> comparator) {
-        if (begin < end) {
-            int partitionIndex = partition(arr, begin, end, comparator);
+    public void quickSort() {
+        quickSort(array, 0, currentSize - 1);
+    }
 
-            quickSort(arr, begin, partitionIndex - 1, comparator);
-            quickSort(arr, partitionIndex + 1, end, comparator);
+
+    private void quickSort(Object[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
     }
 
-    private int partition(T[] arr, int begin, int end, Comparator<T> comparator) {
-        T pivot = arr[end];
-        int i = (begin - 1);
+    private int partition(Object[] arr, int begin, int end) {
+        T pivot = (T) arr[end];
+        int i = begin - 1;
 
         for (int j = begin; j < end; j++) {
-            if (comparator.compare(arr[j], pivot) <= 0) {
+            if (((T) arr[j]).compareTo(pivot) <= 0) {
                 i++;
                 swapElements(arr, i, j);
             }
         }
-
         swapElements(arr, i + 1, end);
         return i + 1;
     }
 
-    public static void swapElements(Object[] arr, int indexA, int indexB) {
+    private static void swapElements(Object[] arr, int indexA, int indexB) {
         Object tmp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = tmp;
     }
+
 }
