@@ -2,6 +2,11 @@ package aston.intensiv;
 
 import java.util.Arrays;
 
+/**
+ * Класс реализация ArrayList,
+ *
+ * @author Leonid Sysoev
+ */
 public class MyArrayList<T extends Comparable<T>> {
     private final int INIT_SIZE = 10;
     private Object[] array;
@@ -11,6 +16,11 @@ public class MyArrayList<T extends Comparable<T>> {
         this.array = new Object[INIT_SIZE];
     }
 
+    /**
+     * Метод для добавления элементов в лист
+     * @param item новый элемент
+     * @return item новый элемент
+     */
     public T add(T item) {
         lengthCheck();
         nullCheck(item);
@@ -20,7 +30,12 @@ public class MyArrayList<T extends Comparable<T>> {
         array[currentSize++] = item;
         return item;
     }
-
+    /**
+     * Метод для добавления элементов в лист по индексу
+     * @param item новый элемент
+     * @param index индекс элемента
+     * @return item новый элемент
+     */
     public T add(int index, T item) {
         lengthCheck();
         nullCheck(item);
@@ -29,11 +44,16 @@ public class MyArrayList<T extends Comparable<T>> {
             array[currentSize++] = item;
         } else {
             System.arraycopy(array, index, array, currentSize + 1, currentSize - index);
-
         }
         return item;
     }
 
+    /**
+     * Метод для изменения элементов в листе по индексу
+     * @param item новый элемент
+     * @param index индекс элемента
+     * @return item новый элемент
+     */
     public T set(int index, T item) {
         indexCheck(index);
         nullCheck(item);
@@ -44,7 +64,11 @@ public class MyArrayList<T extends Comparable<T>> {
         }
         return item;
     }
-
+    /**
+     * Метод для поиска индекса элемента
+     * @param item элемент
+     * @return  индекс элемента
+     */
     public int indexOf(T item) {
         for (int i = 0; i < currentSize; i++) {
             if (array[i].equals(item)) {
@@ -53,12 +77,19 @@ public class MyArrayList<T extends Comparable<T>> {
         }
         return -1;
     }
-
+    /**
+     * Метод для определения наличия элемента
+     * @param item  элемент
+     * @return  индекс элемента
+     */
     public boolean contains(T item) {
         return indexOf(item) != -1;
     }
-
-    public T remove(int index) {
+    /**
+     * Метод для удаления элемента по индексу
+     * @param index индекс элемента
+     */
+    public void remove(int index) {
         indexCheck(index);
         T item = (T) array[index];
         if (!contains(item)) {
@@ -68,9 +99,12 @@ public class MyArrayList<T extends Comparable<T>> {
             System.arraycopy(array, index + 1, array, index, currentSize - index);
         }
         currentSize--;
-        return item;
     }
-
+    /**
+     * Метод для удаления элемента по элементу
+     * @param item  элемент
+     * @return  элемент
+     */
     public T remove(T item) {
         nullCheck(item);
         int index = indexOf(item);
@@ -83,7 +117,11 @@ public class MyArrayList<T extends Comparable<T>> {
         currentSize--;
         return item;
     }
-
+    /**
+     * Метод для поиска последнего индекса элемента
+     * @param item элемент
+     * @return  индекс элемента
+     */
     public int lastIndexOf(T item) {
         for (int i = currentSize - 1; i >= 0; i--) {
             if (array[i].equals(item)) {
@@ -92,29 +130,48 @@ public class MyArrayList<T extends Comparable<T>> {
         }
         return -1;
     }
-
+    /**
+     * Метод для получения элемента по индексу
+     * @param index индекс элемента
+     * @return item элемент
+     */
     public T get(int index) {
         indexCheck(index);
         return (T) array[index];
     }
-
+    /**
+     * Метод для преобразования листа в массив
+     * @return массив элементов
+     */
     public Object[] toArray() {
         return Arrays.copyOf(array, currentSize);
     }
-
+    /**
+     * Метод для сравнения листов
+     * @param otherList индекс элемента
+     * @return boolean
+     */
     public boolean equals(MyArrayList<T> otherList) {
         nullCheckArray(otherList);
         return Arrays.equals(this.toArray(), otherList.toArray());
     }
-
+    /**
+     * Метод для получения размера листа
+          * @return currentSize размер листа
+     */
     public int size() {
         return currentSize;
     }
-
+    /**
+     * Метод для проверки пуст-ли лист
+     * @return boolean
+     */
     public boolean isEmpty() {
         return currentSize == 0;
     }
-
+    /**
+     * Метод для очистки листа
+     */
     public void clear() {
         currentSize = 0;
     }
@@ -149,7 +206,9 @@ public class MyArrayList<T extends Comparable<T>> {
             throw new RuntimeException();
         }
     }
-
+    /**
+     * Метод для быстрой сортировки листа
+     */
     public void quickSort() {
         quickSort(array, 0, currentSize - 1);
     }

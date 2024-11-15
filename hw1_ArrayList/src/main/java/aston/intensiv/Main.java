@@ -12,7 +12,10 @@ public class Main {
         arrayList.add(7);
         arrayList.add(3);
         System.out.println(Arrays.toString(arrayList.toArray()));
-        arrayList.quickSort();
+        arrayList.add(6, 500);
+        //arrayList.quickSort();
+        System.out.println(Arrays.toString(arrayList.toArray()));
+
 
     }
 }
